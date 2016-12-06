@@ -1,0 +1,66 @@
+<html>
+<pre>
+
+
+Synchronizing Processors with Memory-Content-Generated Interrupts
+
+Implementations of the "Lock-Unlock" method
+of synchronizing processors in a multiprocessor 
+system usually require uninterruptable, memory-pause type instructions.
+ An interlock scheme called read-interlock, 
+which does not require memory-pause instructions, has
+been developed for a dual DEC PDP-10 system with 
+real-time requirements.  The read-interlock method does
+require a special"read-interlock" instruction 
+in the repertoire of the processors and a special "read-interlock"
+cycle in the repertoire of the memory 
+modules.  When a processor examines a "lock" (a memory
+location) with a read-interlock instruction, it 
+will be interrupted if the lock was already set; examining
+a lock immediately sets it if it was not already 
+set (this event sequence is a read-interlock cycle). 
+Writing into a lock clears it.  Having the processor 
+interrupted upon encountering a set lock instead of
+branching is advantageous if the branch would have 
+resulted in an effective interrupt.
+
+CACM June, 1973
+
+Hill, J. C.
+
+interrupts,supervisors, monitors, debugging, parallel
+processing, associative memories, microprogramming
+
+4.32 6.29
+
+CA730603 JB January 23, 1978  3:29 PM
+
+1458	4	2497
+1523	4	2497
+1603	4	2497
+1698	4	2497
+1747	4	2497
+1748	4	2497
+1854	4	2497
+1877	4	2497
+1960	4	2497
+2377	4	2497
+2378	4	2497
+2497	4	2497
+2497	4	2497
+2534	4	2497
+2558	4	2497
+2625	4	2497
+2632	4	2497
+2840	4	2497
+2941	4	2497
+3105	4	2497
+3144	4	2497
+1471	5	2497
+2182	5	2497
+2497	5	2497
+2497	5	2497
+2497	5	2497
+
+</pre>
+</html>

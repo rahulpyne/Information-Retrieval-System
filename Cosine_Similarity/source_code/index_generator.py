@@ -139,10 +139,8 @@ def start():
             os.remove(OUTPUT_FOLDER_PATH+"\\VSM_doc_score.txt")
         query_file = open("query.txt", 'r')
         for query in query_file.readlines():
-            QUERY_ID+=1
-            query = query.lstrip()
-            query = query.rstrip()
-            generate_doc_vsm_score(query.lower(),inverted_index,total_num_of_docs)
+            QUERY_ID+=1            
+            generate_doc_vsm_score(query,inverted_index,total_num_of_docs)
     except Exception as e:
         print(traceback.format_exc())
 
