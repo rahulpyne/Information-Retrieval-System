@@ -115,8 +115,7 @@ def write_doc_score(sorted_doc_score):
             out_file  = open(OUTPUT_FOLDER_PATH+"\\VSM_doc_score.txt",'a')
             for i in range(min(100,len(sorted_doc_score))):
                 doc_id,doc_score = sorted_doc_score[i]
-                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +"(doc_id = "+ str(doc_id)+") " + str(i+1) + " " + str(doc_score) +" Vector_Space_Model\n")
-            out_file.write("\n\n")
+                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +" " + str(i+1) + " " + str(doc_score) +" Vector_Space_Model\n")            
             out_file.close()
             print "\nDocument Scoring for Query id = " +str(QUERY_ID) +" has been generated inside VSM_doc_score.txt"
         else:
@@ -139,7 +138,7 @@ def start():
             os.remove(OUTPUT_FOLDER_PATH+"\\VSM_doc_score.txt")
         query_file = open("query.txt", 'r')
         for query in query_file.readlines():
-            QUERY_ID+=1            
+            QUERY_ID+=1
             generate_doc_vsm_score(query,inverted_index,total_num_of_docs)
     except Exception as e:
         print(traceback.format_exc())
