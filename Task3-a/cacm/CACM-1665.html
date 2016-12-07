@@ -1,0 +1,119 @@
+<html>
+<pre>
+
+
+Automatic Generation of Efficient Lexical
+Processors Using Finite State Techniques
+
+The practical application of the theory of
+finite-state automata to automatically generate 
+lexical processors is dealt with in this tutorial article
+by the use of the AED RWORD system, developed 
+at M. as part of the AED-1 system.  This system
+accepts as input description of the multicharacter 
+items or of words allowable in a language given in terms
+of a subset of regular expressions. The output 
+of the system is a lexical processor which reads a string
+of characters and combines them into the items 
+as defined by the regular expressions.  Each output
+item is identified by a code number together with 
+a pointer to a block of storage containing the characters
+and character count in the item.  The processors 
+produced by the system are based on finite-state machines.
+ Each state of a "machine" corresponds to 
+a unique condition in the lexical processing of a character
+string.  At each state a character is read, 
+and the machine changes to a new state.  At each transition
+appropriate actions are taken based on the 
+particular character read.  The system has been in operation
+since 1966, and processors generated have 
+compared favorably in speed to carefully hand-coded programs
+to accomplish the same task.  Lexical processors 
+for AED-O and MAD are among the many which have been
+produced.  The techniques employed are independent 
+of the nature of the items being evaluated.  If the
+word "events" is substituted for character string, 
+these processors may be described as generalized decision-making
+mechanisms based upon an ordered sequence 
+of events.  This allows the system to be used in a
+range of applications outside the area of lexical 
+processing.  However convenient these advantages may
+be, speed is the most important consideration.  
+In designing a system for automatic generation of a
+lexical processor, the goal was a processor which 
+completely eliminated backup or rereading, which was nearly
+as fast as hand-coded processors, which would 
+analyze the language and detect errors, and
+which would be convenient and easy to use.
+
+CACM December, 1968
+
+Johnson, W. L.
+Porter, J. H.
+Ackley, S. I.
+Ross, D. T.
+
+character string, compiler, finite-state automata, finite-state
+machine, lexical processor, nondeterministic 
+machine, parsing, plex structure, regular expressions,sequential
+machine, syntactic analysis
+
+3.63 3.75 4.12 5.22 5.24 5.31
+
+CA681201 JB February 21, 1978  2:19 PM
+
+1051	4	1665
+1139	4	1665
+1265	4	1665
+1323	4	1665
+1358	4	1665
+1380	4	1665
+1552	4	1665
+1665	4	1665
+1665	4	1665
+1665	4	1665
+1665	4	1665
+1768	4	1665
+1781	4	1665
+1787	4	1665
+1787	4	1665
+1824	4	1665
+1825	4	1665
+1836	4	1665
+1860	4	1665
+1861	4	1665
+1989	4	1665
+2015	4	1665
+2110	4	1665
+2112	4	1665
+2127	4	1665
+2155	4	1665
+2187	4	1665
+2317	4	1665
+2534	4	1665
+2541	4	1665
+2545	4	1665
+2698	4	1665
+2698	4	1665
+2733	4	1665
+2733	4	1665
+2820	4	1665
+3073	4	1665
+3155	4	1665
+763	4	1665
+1665	5	1665
+1665	5	1665
+1665	5	1665
+1781	5	1665
+378	5	1665
+2746	5	1665
+631	5	1665
+799	5	1665
+1665	6	1665
+1739	6	1665
+2139	6	1665
+2545	6	1665
+2786	6	1665
+
+</pre>
+</html>

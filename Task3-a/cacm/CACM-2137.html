@@ -1,0 +1,44 @@
+<html>
+<pre>
+
+
+New LISP Techniques for a Paging Environment
+
+The system described herein employs the block
+concept, and that of global and local variables, 
+in addition to the methods applied in most LISP systems.
+ Also, a new means of list representation is 
+used: "local sequential" for lists created during compilation,
+and "block level sequential" for those 
+created dynamically.  A new garbage collection algorithm
+has been introduced to make lists as compact 
+as possible; partial garbage collection is performed after
+each block exit instead of total garbage collection 
+when storage is exhausted.  The algorithm does not use
+the customary flagging procedure.  This combination 
+of features has eliminated the need for a free list,
+and effectively minimizes the number of pages used 
+at any moment.
+
+CACM December, 1971
+
+Rochfeld, A.
+
+LISP, list processing, paging, virtual memory,
+garbage collection, core fragmentation, compact 
+list structures, block, segment
+
+4.12 4.22 4.32
+
+CA711206 JB February 2, 1978  10:01 AM
+
+1073	4	2137
+2137	4	2137
+2276	4	2137
+1153	5	2137
+2137	5	2137
+2137	5	2137
+2137	5	2137
+
+</pre>
+</html>

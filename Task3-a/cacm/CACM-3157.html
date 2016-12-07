@@ -1,0 +1,44 @@
+<html>
+<pre>
+
+
+Proving Termination with Multiset Orderings
+
+A common tool for proving the termination of programs is the well-founded
+set, a set ordered in such a way as to admit no infinite descending sequences.
+The basic approach is to find a termination function  that maps
+the values of the program variables into some well-founded set,
+such that the value of the termination function is repeatedly reduced
+throughout the computation.  All too often, the termination functions required 
+are difficult to find and are of a complexity out
+of proportion to the program under consideration. Multisets (bags)
+over a given well-founded set S are sets that admit multiple occurrences
+of elements taken from S.  The given ordering on S induces
+an ordering on the finite multisets over S.  This multiset ordering
+is shown to be well-founded.  The multiset ordering enables the
+use of relatively simple and intuitive termination functions in otherwise
+difficult termination proofs.  In particular, the multiset
+ordering is used to prove the termination of production systems,
+programs defined in terms of sets of rewriting rules. 
+
+CACM August, 1979
+
+Dershowitz, N.
+Manna, Z.
+
+Program correctness, program termination, program verification, well-founded
+orderings, well-founded sets, multisets, bags, production systems,
+term rewriting systems, tree replacement systems, reduction rules
+
+5.24 5.7
+
+CA790803 DB January 4, 1980  3:44 PM
+
+3157	4	3157
+3014	5	3157
+3157	5	3157
+3157	5	3157
+3157	5	3157
+
+</pre>
+</html>
