@@ -39,7 +39,8 @@ def generate_index():
         for term in inverted_index:
             idf = 1.0 + log(float(total_num_of_docs) / float(len(inverted_index[term].keys()) + 1)) # implmenting log(N/(n+1)) and adding 1.0 to prevent sending 0.
             for doc in inverted_index[term]:
-                inverted_index[term][doc] = (inverted_index[term][doc]) * idf #tfidf for each doc
+                normalized_tf = float(inverted_index[term][doc])/float(tokens_per_doc[doc]) # normalizing tf by dividing tf by number of tokens in that document
+                inverted_index[term][doc] = normalized_tf * idf # normalizing term frequencies relative to the number of tokens in each doc
     except Exception as e:
         print(traceback.format_exc())
     return inverted_index,total_num_of_docs
@@ -81,7 +82,7 @@ def write_doc_score(sorted_doc_score):
             out_file  = open(OUTPUT_FOLDER_PATH+"\\TFIDF_doc_score.txt",'a')
             for i in range(min(100,len(sorted_doc_score))):
                 doc_id,doc_score = sorted_doc_score[i]
-                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +" " + str(i+1) + " " + str(doc_score) +" tf_idf_Model\n")            
+                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +" " + str(i+1) + " " + str(doc_score) +" tf_idf_Model\n")
             out_file.close()
             print "\nDocument Scoring for Query id = " +str(QUERY_ID) +" has been generated inside TFIDF_doc_score.txt"
         else:
