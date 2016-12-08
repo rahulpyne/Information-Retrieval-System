@@ -112,12 +112,12 @@ def cosine_similarity(query_term,inverted_index,total_num_of_docs,doc_magnitude)
 def write_doc_score(sorted_doc_score):
     try:
         if(len(sorted_doc_score)>0):
-            out_file  = open(OUTPUT_FOLDER_PATH+"\\VSM_doc_score.txt",'a')
+            out_file  = open(OUTPUT_FOLDER_PATH+"\\VSM_stemmed_doc_score.txt",'a')
             for i in range(min(100,len(sorted_doc_score))):
                 doc_id,doc_score = sorted_doc_score[i]
-                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +" " + str(i+1) + " " + str(doc_score) +" Vector_Space_Model\n")            
+                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +" " + str(i+1) + " " + str(doc_score) +" Vector_Space_Model\n")
             out_file.close()
-            print "\nDocument Scoring for Query id = " +str(QUERY_ID) +" has been generated inside VSM_doc_score.txt"
+            print "\nDocument Scoring for Query id = " +str(QUERY_ID) +" has been generated inside VSM_stemmed_doc_score.txt"
         else:
             print "\nTerm not found in the corpus"
     except Exception as e:
@@ -134,8 +134,8 @@ def start():
         print "\n\t      Query Processing begins\n"
         print "========================================================"
         #Removing the existing VSM_doc_score.txt to prevent appending the new results with the old one.
-        if exists(OUTPUT_FOLDER_PATH+"\\VSM_doc_score.txt"):
-            os.remove(OUTPUT_FOLDER_PATH+"\\VSM_doc_score.txt")
+        if exists(OUTPUT_FOLDER_PATH+"\\VSM_stemmed_doc_score.txt"):
+            os.remove(OUTPUT_FOLDER_PATH+"\\VSM_stemmed_doc_score.txt")
         query_file = open("query.txt", 'r')
         for query in query_file.readlines():
             QUERY_ID+=1
