@@ -1,0 +1,40 @@
+<html>
+<pre>
+
+
+Storage-Efficient Representation of Decimal Data
+
+Usually n decimal digits are represented by
+4n bits in computers.  Actually, two BCD digits 
+can be compressed optimally and reversibly into 7 bits,
+and three digits into 10 bits, by a very simple 
+algorithm based on the fixed-length combination of two
+variable field-length encodings.  In over half 
+of the cases the compressed code results from the conventional
+BCD code by simple removal of redundant 
+0 bits.  A long decimal message can be subdivided into
+three-digit blocks, and separately compressed; 
+the result differs from the asymptotic minimum length
+by only 0.34 percent.  The hardware requirement 
+is small, and the mappings can be done manually.
+
+CACM January, 1975
+
+Chi Chen, T.
+Ho, I. T.
+
+binary-coded decimal digits, decimal data storage
+
+6.32 6.34
+
+CA750110 JB January 12, 1978  9:42 AM
+
+2729	5	2801
+2801	5	2801
+2801	5	2801
+2801	5	2801
+2288	6	2801
+2801	6	2801
+
+</pre>
+</html>
