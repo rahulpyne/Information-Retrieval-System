@@ -1,4 +1,5 @@
 from os.path import exists
+import traceback
 
 RELEVANT_DICT = {}
 RANK_DICT = {}
@@ -70,105 +71,117 @@ def evaluate_MRR():
     print "The mean reciprocal ranking is: " + str(mean_reciprocal_ranking)
 
 def evaluate_pk_measure():
+    try:
 
-    pk_dictionary_5 = {}
-    pk_dictionary_20 = {}
-    query_ID = 1
+        pk_dictionary_5 = {}
+        pk_dictionary_20 = {}
+        query_ID = 1
+        file_without_ext = FILE_NAME[:FILE_NAME.rindex('.')]
+        outfilepk5 = open(file_without_ext+"_pk5_score.txt",'w')
+        outfilepk20 = open(file_without_ext+"_pk20_score.txt",'w')
+        while query_ID != NO_OF_QUERIES+1:
 
-    while query_ID != NO_OF_QUERIES+1:
+            if not RELEVANT_DICT.get(str(query_ID)):
+                pk_dictionary_5[query_ID] = 0.0
+                pk_dictionary_20[query_ID] = 0.0
+                query_ID += 1
+                continue
 
-        if not RELEVANT_DICT.get(str(query_ID)):
-            pk_dictionary_5[query_ID] = 0.0
-            pk_dictionary_20[query_ID] = 0.0
+            relevant_doc_list = RELEVANT_DICT[str(query_ID)]
+            top_5_ranked_doc_list = RANK_DICT[str(query_ID)][:5]
+            top_20_ranked_doc_list = RANK_DICT[str(query_ID)][:20]
+            #print ranked_doc_list
+
+            rel_doc_counter_top5 = 0
+            for doc in top_5_ranked_doc_list:
+                docID = doc.split()[2]
+                for rel_doc in relevant_doc_list:
+                    if docID == rel_doc.split()[2]:
+                        rel_doc_counter_top5 += 1
+
+            pk_dictionary_5[query_ID] = rel_doc_counter_top5 / 5.0
+            outfilepk5.write(str(query_ID) + " "+ str(pk_dictionary_5[query_ID]) +" pk_5_Model\n")
+
+
+            rel_doc_counter_top20 = 0
+            for doc in top_20_ranked_doc_list:
+                docID = doc.split()[2]
+                for rel_doc in relevant_doc_list:
+                    if docID == rel_doc.split()[2]:
+                        rel_doc_counter_top20 += 1
+
+            pk_dictionary_20[query_ID] = rel_doc_counter_top20 / 20.0
+            outfilepk20.write(str(query_ID) + " "+ str(pk_dictionary_20[query_ID]) +" pk_20_Model\n")
             query_ID += 1
-            continue
-
-        relevant_doc_list = RELEVANT_DICT[str(query_ID)]
-        top_5_ranked_doc_list = RANK_DICT[str(query_ID)][:5]
-        top_20_ranked_doc_list = RANK_DICT[str(query_ID)][:20]
-        #print ranked_doc_list
-
-        rel_doc_counter_top5 = 0
-        for doc in top_5_ranked_doc_list:
-            docID = doc.split()[2]
-            for rel_doc in relevant_doc_list:
-                if docID == rel_doc.split()[2]:
-                    rel_doc_counter_top5 += 1
-
-        pk_dictionary_5[query_ID] = rel_doc_counter_top5 / 5.0
-
-        rel_doc_counter_top20 = 0
-        for doc in top_20_ranked_doc_list:
-            docID = doc.split()[2]
-            for rel_doc in relevant_doc_list:
-                if docID == rel_doc.split()[2]:
-                    rel_doc_counter_top20 += 1
-
-        pk_dictionary_20[query_ID] = rel_doc_counter_top20 / 20.0
-
-        query_ID += 1
-
-    print "Printing p@k value for K=5..."
-    print pk_dictionary_5
-    print "Printing p@k value for K=20..."
-    print pk_dictionary_20
+        outfilepk5.close()
+        outfilepk20.close()
+    except Exception as e:
+        print(traceback.format_exc())
 
 
 def evaluate_precision_and_recall():
+    try:
 
-    precision_dict = {}
-    recall_dict = {}
-    sum_average_precision = 0
-    for query in RANK_DICT:
-        average_precision = 0
-        doc_counter = 0
-        doc_found = 0
-        precision_sum = 0
+        precision_dict = {}
+        recall_dict = {}
+        sum_average_precision = 0
+        file_without_ext = FILE_NAME[:FILE_NAME.rindex('.')]
+        outfile = open(file_without_ext+"_precision_recall.txt",'w')
+        for query in RANK_DICT:
+            average_precision = 0
+            doc_counter = 0
+            doc_found = 0
+            precision_sum = 0
 
-        if not RELEVANT_DICT.get(str(query)):
+            if not RELEVANT_DICT.get(str(query)):
+                precision_dict[query] = []
+                recall_dict[query] = []
+                outfile.write("The query number "+str(query) +" has no relevant set, hence its precision and recall is 0\n\n ")                
+                continue
+
+
+            relevant_doc_list = RELEVANT_DICT[query]
+            relevant_doc_count = len(relevant_doc_list)
             precision_dict[query] = []
             recall_dict[query] = []
-            continue
+            for doc in RANK_DICT[query]:
+                doc_counter +=1
+                docID = doc.split()[2]
+                doc_rank = doc.split()[3]
+                doc_score = doc.split()[4]
+                doc_found_flag = False
+                for rel_doc in relevant_doc_list:
+                    if docID ==  rel_doc.split()[2]:
+                        doc_found_flag = True
+                        break;
+                if doc_found_flag:
+                    doc_found += 1
+                    precision = float(doc_found) / float(doc_counter)
+                    precision_sum = precision_sum + precision
+                    #print "The precision for " + str(docID) + " is: " + str(precision)
+                    precision_dict[query].append({docID : precision})
+                    recall = float(doc_found) / float(relevant_doc_count)
+                    #print "The recall for " + str(docID) + " is: " + str(recall)
+                    recall_dict[query].append({docID : recall})
+                    outfile.write(str(query) +" Q0 "+docID+" "+str(doc_rank)+" "+str(doc_score)+" R "+str(precision)+" "+str(recall)+"\n")
+                else:
+                    precision = float(doc_found) / float(doc_counter)
+                    #print "The precision for " + str(docID) + " is: " + str(precision)
+                    precision_dict[query].append({docID : precision})
+                    recall = float(doc_found) / float(relevant_doc_count)
+                    #print "The recall for " + str(docID) + " is: " + str(recall)
+                    recall_dict[query].append({docID : recall})
+                    outfile.write(str(query) +" Q0 "+docID+" "+str(doc_rank)+" "+str(doc_score)+" N "+str(precision)+" "+str(recall)+"\n")
+            average_precision = average_precision + float(precision_sum) / float(doc_found)
+            outfile.write("\nAverage Precision for query no "+ str(query) +" is: " + str(average_precision)+"\n\n")
+            sum_average_precision = sum_average_precision + average_precision
+            #print "The average precision for " + str(query) + " is: " + str(average_precision)
 
-
-        relevant_doc_list = RELEVANT_DICT[query]
-        relevant_doc_count = len(relevant_doc_list)
-        precision_dict[query] = []
-        recall_dict[query] = []
-        for doc in RANK_DICT[query]:
-            doc_counter +=1
-            docID = doc.split()[2]
-            doc_found_flag = False
-            for rel_doc in relevant_doc_list:
-                if docID ==  rel_doc.split()[2]:
-                    doc_found_flag = True
-                    break;
-            if doc_found_flag:
-                doc_found += 1
-                precision = float(doc_found) / float(doc_counter)
-                precision_sum = precision_sum + precision
-                #print "The precision for " + str(docID) + " is: " + str(precision)
-                precision_dict[query].append({docID : precision})
-                recall = float(doc_found) / float(relevant_doc_count)
-                #print "The recall for " + str(docID) + " is: " + str(recall)
-                recall_dict[query].append({docID : recall})
-            else:
-                precision = float(doc_found) / float(doc_counter)
-                #print "The precision for " + str(docID) + " is: " + str(precision)
-                precision_dict[query].append({docID : precision})
-                recall = float(doc_found) / float(relevant_doc_count)
-                #print "The recall for " + str(docID) + " is: " + str(recall)
-                recall_dict[query].append({docID : recall})
-        average_precision = average_precision + float(precision_sum) / float(doc_found)
-        sum_average_precision = sum_average_precision + average_precision
-        #print "The average precision for " + str(query) + " is: " + str(average_precision)
-
-    print "Printing precision dictionary..."
-    print precision_dict
-    print "Printing recall dictionary..."
-    print recall_dict
-    mean_average_precision = float(sum_average_precision) / float(NO_OF_QUERIES)
-    print "The mean average precision is: " + str(mean_average_precision)
+        mean_average_precision = float(sum_average_precision) / float(NO_OF_QUERIES)
+        outfile.write("\nThe mean average precision is: " + str(mean_average_precision)+"\n")
+        outfile.close()
+    except Exception as e:
+        print(traceback.format_exc())
 
 
 # main function
