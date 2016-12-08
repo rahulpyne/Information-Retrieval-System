@@ -98,17 +98,16 @@ public class HW4 {
 				ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
 				// 4. display results
+				System.out.println("\nThe number of hits for \n"+ currentQuery +" : "+ hits.length);
 				for (int i = 0; i < Math.min(100, hits.length); ++i) {
 					int docId = hits[i].doc;
 					Document d = searcher.doc(docId);
 					String filename = d.get("filename");
 					filename = filename.substring(0, filename.length() - 4);
-					String concatenatedOutput = query_id + " Q0 " + filename + "(doc_id = " + docId + ") " + (i + 1)
-							+ " " + hits[i].score + " LuceneModel\n";
-					System.out.print(concatenatedOutput);
+					String concatenatedOutput = query_id + " Q0 " + filename + " " + (i + 1)
+							+ " " + hits[i].score + " LuceneModel\n";					
 					docFileWriter.write(concatenatedOutput);
-				}
-				docFileWriter.write("\n\n");
+				}				
 				query_id++;
 			} catch (Exception e) {
 				e.printStackTrace();
