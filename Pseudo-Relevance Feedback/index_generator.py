@@ -72,7 +72,7 @@ def generate_doc_vsm_score(query,inverted_index,total_num_of_docs):
                     doc_id_mag = fetch_doc_mag(doc_id,inverted_index) #getting doc_magnitude for all the term from main inverted_index for a given doc_id
                     doc_magnitude.update({doc_id:doc_id_mag})
 
-        cosine_similarity(query_term_freq,reduced_inverted_index,total_num_of_docs,doc_magnitude,query)
+        cosine_similarity(query_term_freq,reduced_inverted_index,total_num_of_docs,doc_magnitude,query,inverted_index)
     except Exception as e:
         print(traceback.format_exc())
 
@@ -84,7 +84,7 @@ def fetch_doc_mag(doc_id,inverted_index):
     return sqrt(doc_magnitude)
 
 
-def cosine_similarity(query_term,inverted_index,total_num_of_docs,doc_magnitude,query):
+def cosine_similarity(query_term,inverted_index,total_num_of_docs,doc_magnitude,query,index):
     dot_product = {}
     query_magnitude = 0
     doc_score = {}
@@ -107,20 +107,34 @@ def cosine_similarity(query_term,inverted_index,total_num_of_docs,doc_magnitude,
             doc_score.update({doc:(float(dot_product[doc])/float(vsm_denominator))})
 
         sorted_doc_score = sorted(doc_score.items(), key=operator.itemgetter(1), reverse=True)
-        write_doc_score(sorted_doc_score)
         if feedback_flag == 1:
-            pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of_docs)
+            pseudo_relevance_feedback(sorted_doc_score,query,index,total_num_of_docs)
+            write_doc_score(sorted_doc_score)
     except Exception as e:
         print(traceback.format_exc())
 
 def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of_docs):
     global feedback_flag
+    new_query = query
     relevance_index = {}
-    updated_query = query
+    non_relevance_index = {}
+    mag_rel = 0
+    mag_non_rel = 0
+    query_vector = {}
+    updated_query = {}
     feedback_flag += 1
     k = 10 #consider the to k documents for the feedback loop
-    range_min = 10 #range of the terms which will be appended to query
-    range_max = 20
+    #### making the query vector
+    for term in query.split():
+        if query_vector.has_key(term):
+            query_vector[term] +=1
+        else:
+            query_vector[term] = 1
+    for term in inverted_index:
+        if not query_vector.has_key(term):
+            query_vector[term] = 0
+    print "query vector generated"
+    ###making the relevant document set vector    
     for i in range(0,k):
         doc_id,doc_score = sorted_doc_score[i]
         doc= open(INPUT_FOLDER+"\\"+DOC_NAME[doc_id]+".txt").read()
@@ -129,13 +143,52 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
                 relevance_index[term] += 1
             else:
                 relevance_index[term] = 1
-    sorted_relevance = sorted(relevance_index.items(), key=operator.itemgetter(1), reverse=True)
-    for i in range(range_min,range_max):
-        term,frequency = sorted_relevance[i]
-        if term not in updated_query:
-            updated_query +=  " "
-            updated_query +=  term
-    generate_doc_vsm_score(query,inverted_index,total_num_of_docs)
+                
+    for term in inverted_index:
+        if relevance_index.has_key(term):
+            relevance_index[term] = relevance_index[term]
+        else:
+            relevance_index[term] = 0
+    ### calculating the magnitude of the relevant document set vector
+    for term in relevance_index:
+        mag_rel += relevance_index[term]**2
+    mag_rel = sqrt(mag_rel)
+    print "relevant vector generated"
+    ###making the non-relevant document set vector    
+    for i in range(k+1,len(sorted_doc_score)):
+        doc_id,doc_score = sorted_doc_score[i]
+        doc= open(INPUT_FOLDER+"\\"+DOC_NAME[doc_id]+".txt").read()
+        if term in doc.split():
+            if non_relevance_index.has_key(term):
+                non_relevance_index[term] += 1
+            else:
+                non_relevance_index[term] = 1
+                    
+    for term in inverted_index:
+        if non_relevance_index.has_key(term):
+            non_relevance_index[term] = non_relevance_index[term]
+        else:
+            non_relevance_index[term] = 0
+    print "non relevant vector generated"  
+    ### calculating the magnitude of the relevant document set vector
+    for term in non_relevance_index:
+        mag_non_rel += non_relevance_index[term]**2
+    mag_non_rel = sqrt(mag_non_rel)
+    
+    ###calculating the new query
+    for term in inverted_index:
+        updated_query[term] = query_vector[term] + (0.5/mag_rel) * relevance_index[term] - (0.15/mag_non_rel) * non_relevance_index[term]
+    
+    sorted_updated_query = sorted(updated_query.items(), key=operator.itemgetter(1), reverse=True)
+    print "Rocchio algorithm scores generated"
+    
+    for i in range(20):
+        term,frequency = sorted_updated_query[i]
+        if term not in query:
+            new_query +=  " "
+            new_query +=  term
+    print "Generating the updated search results"
+    generate_doc_vsm_score(new_query,inverted_index,total_num_of_docs)
 
 
 
