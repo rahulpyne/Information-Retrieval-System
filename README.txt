@@ -40,27 +40,19 @@ INSTALLATION GUIDE:
 
 GENERAL INSTRUCTIONS:
 
--- Please maintain the folder and file structure inside 'source_code' folder for each of the models, as it is very important for the the codes of both the tasks to work.
+-- Please maintain the folder and file structure inside 'source_code' folder for each of the models, as it is very important for the the codes of all the tasks to work.
 -- Each search model folder contains a sub-folder 'cacm'. This folder contains the 3204 raw documents provided for this project :-
 	-- Run the python file 'Parser.py' by using the command 'python Parser.py' in windows powershell or command prompt
 	-- The corpus will be generated from the cacm documents present in 'cacm' and be stored in 'generated_corpus' document wise. And a processed query file named 'query.txt' will be generated from the raw query file 'cacm.query' in the source_code folder structure itself.
 -- Once the Parser.py has parsed all the raw documents, run 'index_generator.py' by using the command 'python index_generator.py' in windows powershell or command prompt.
 -- Once the index_generator.py has been run, a model respective doc score would be generated inside the 'doc_score' folder.
 -- Copy and paste these respective doc score txts inside Evaluation folder to get the desired evaluation results of the doc score of the search model.
--- Run 'Evaluation.py'
+-- Run 'Evaluation.py' by using the command 'Python Evaluation.py' in windows powershell or command prompt.
+-- For each doc_score model, Precision_and_Recall txt and P@K=5, P@K=20 txts would be generated.
 -- The code for Lucene implementation is provided in 'source_code' folder of Lucene along with all the jars needed for the code to run inside folder 'java_jars'
 -- Lucene.jar is the runnable jar of the given code which can work independently from a command prompt and doesn't need any IDE setup or dependency on the jars. One can run this executable jar by running the given command in a command prompt 'java -jar Lucene.jar'
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-CONTRIBUTORS and CITATIONS:
-
--- https://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html - TFIDFSimilarity using Lucene Model.
--- https://www.udacity.com/course/intro-to-computer-science--cs101 : Basics of Python Programming
--- https://learnpythonthehardway.org/book/ : Python Programming
--- http://nlp.stanford.edu/IR-book/html/htmledition/dropping-common-terms-stop-words-1.html : For stop words.
+-- For Snippet Generation, kindly follow the previous steps of generating corpus using Parser.py and then generating document score query by executing 'index_generator.py' and then run the snippet.py. 'Snippet.py' prints the snippets along with the document names and highlights the query terms with blue background and yellow foreground.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -68,4 +60,4 @@ CONTACT DETAILS:
 
 The author of the README can be contacted via:
 Phone: (+1) 6173725107
-E-Mail: pyne.r@husky.neu.edu
+E-Mail: pyne.r@husky.neu.edu, nandi.t@husky.neu.edu, jena.p@husky.neu.edu
