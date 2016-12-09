@@ -1,8 +1,8 @@
 The query number 56 has no relevant set, hence its precision and recall is 0
 
- The query number 54 has no relevant set, hence its precision and recall is 0
+The query number 54 has no relevant set, hence its precision and recall is 0
 
- 42 Q0 CACM-1653 1 16.1514009833 R 1.0 0.047619047619
+42 Q0 CACM-1653 1 16.1514009833 R 1.0 0.047619047619
 42 Q0 CACM-2318 2 16.0707493713 R 1.0 0.0952380952381
 42 Q0 CACM-2542 3 14.7099814717 R 1.0 0.142857142857
 42 Q0 CACM-2984 4 13.8452891461 R 1.0 0.190476190476
@@ -931,9 +931,9 @@ Average Precision for query no 49 is: 0.201015651016
 
 The query number 52 has no relevant set, hence its precision and recall is 0
 
- The query number 53 has no relevant set, hence its precision and recall is 0
+The query number 53 has no relevant set, hence its precision and recall is 0
 
- 24 Q0 CACM-1696 1 7.37332065969 R 1.0 0.0769230769231
+24 Q0 CACM-1696 1 7.37332065969 R 1.0 0.0769230769231
 24 Q0 CACM-0268 2 6.15931770835 N 0.5 0.0769230769231
 24 Q0 CACM-1410 3 4.84151189635 N 0.333333333333 0.0769230769231
 24 Q0 CACM-2882 4 4.62173206799 N 0.25 0.0769230769231
@@ -1759,9 +1759,9 @@ Average Precision for query no 23 is: 0.875
 
 The query number 46 has no relevant set, hence its precision and recall is 0
 
- The query number 47 has no relevant set, hence its precision and recall is 0
+The query number 47 has no relevant set, hence its precision and recall is 0
 
- 44 Q0 CACM-2829 1 35.991247524 R 1.0 0.0588235294118
+44 Q0 CACM-2829 1 35.991247524 R 1.0 0.0588235294118
 44 Q0 CACM-2523 2 24.4972219755 R 1.0 0.117647058824
 44 Q0 CACM-2771 3 12.2261936389 R 1.0 0.176470588235
 44 Q0 CACM-2924 4 10.6596360706 R 1.0 0.235294117647
@@ -2278,7 +2278,7 @@ Average Precision for query no 40 is: 0.579836829837
 
 The query number 41 has no relevant set, hence its precision and recall is 0
 
- 1 Q0 CACM-1605 1 21.5996638294 R 1.0 0.2
+1 Q0 CACM-1605 1 21.5996638294 R 1.0 0.2
 1 Q0 CACM-1410 2 21.5734726467 R 1.0 0.4
 1 Q0 CACM-1506 3 20.5255531189 N 0.666666666667 0.4
 1 Q0 CACM-1519 4 19.6330922126 N 0.5 0.4
@@ -3207,7 +3207,7 @@ Average Precision for query no 8 is: 0.247076023392
 
 The query number 51 has no relevant set, hence its precision and recall is 0
 
- 39 Q0 CACM-2651 1 35.9228680811 R 1.0 0.0833333333333
+39 Q0 CACM-2651 1 35.9228680811 R 1.0 0.0833333333333
 39 Q0 CACM-2940 2 31.2851358552 N 0.5 0.0833333333333
 39 Q0 CACM-3103 3 28.1706918875 N 0.333333333333 0.0833333333333
 39 Q0 CACM-3105 4 27.8795430943 N 0.25 0.0833333333333
@@ -5063,9 +5063,9 @@ Average Precision for query no 36 is: 0.347258797039
 
 The query number 35 has no relevant set, hence its precision and recall is 0
 
- The query number 34 has no relevant set, hence its precision and recall is 0
+The query number 34 has no relevant set, hence its precision and recall is 0
 
- 33 Q0 CACM-2805 1 45.9223129583 R 1.0 1.0
+33 Q0 CACM-2805 1 45.9223129583 R 1.0 1.0
 33 Q0 CACM-2697 2 41.6607799119 N 0.5 1.0
 33 Q0 CACM-2554 3 41.435458048 N 0.333333333333 1.0
 33 Q0 CACM-2047 4 39.9207115706 N 0.25 1.0
@@ -5170,7 +5170,7 @@ Average Precision for query no 33 is: 1.0
 
 The query number 55 has no relevant set, hence its precision and recall is 0
 
- 32 Q0 CACM-3139 1 65.2356070349 R 1.0 0.333333333333
+32 Q0 CACM-3139 1 65.2356070349 R 1.0 0.333333333333
 32 Q0 CACM-2883 2 51.8036659945 N 0.5 0.333333333333
 32 Q0 CACM-2177 3 49.835243226 N 0.333333333333 0.333333333333
 32 Q0 CACM-3018 4 49.2450380543 N 0.25 0.333333333333
@@ -5378,5 +5378,5 @@ Average Precision for query no 57 is: 1.0
 
 The query number 50 has no relevant set, hence its precision and recall is 0
 
- 
+
 The mean average precision is: 0.440120052357
