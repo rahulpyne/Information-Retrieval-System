@@ -86,6 +86,7 @@ def calculate_BM25(n, f, qf, r, N, dl,R):
         print(traceback.format_exc())
 
 def process_score(query_term,inverted_index,N,relevant_list,query,index):
+    global feedback_flag
     doc_score={}
     R = len(relevant_list)
     try:
@@ -108,6 +109,7 @@ def process_score(query_term,inverted_index,N,relevant_list,query,index):
         if feedback_flag == 1:
             pseudo_relevance_feedback(sorted_doc_score,query,index,N,relevant_list)
         if feedback_flag == 2:
+            feedback_flag = 1
             write_doc_score(sorted_doc_score)
     except Exception as e:
         print(traceback.format_exc())
