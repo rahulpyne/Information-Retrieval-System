@@ -151,14 +151,15 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
             relevance_index[term] = 0
     ### calculating the magnitude of the relevant document set vector
     for term in relevance_index:
-        mag_rel += relevance_index[term]**2
-    mag_rel = sqrt(mag_rel)
+        mag_rel += float(relevance_index[term]**2)
+        mag_rel = float(sqrt(mag_rel))
     print "relevant vector generated"
+    print "relevant magnitude" + str(mag_rel)
     ###making the non-relevant document set vector    
     for i in range(k+1,len(sorted_doc_score)):
         doc_id,doc_score = sorted_doc_score[i]
         doc= open(INPUT_FOLDER+"\\"+DOC_NAME[doc_id]+".txt").read()
-        if term in doc.split():
+        for term in doc.split():
             if non_relevance_index.has_key(term):
                 non_relevance_index[term] += 1
             else:
@@ -169,12 +170,14 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
             non_relevance_index[term] = non_relevance_index[term]
         else:
             non_relevance_index[term] = 0
-    print "non relevant vector generated"  
+    print "non relevant vector generated"
+    
     ### calculating the magnitude of the relevant document set vector
     for term in non_relevance_index:
-        mag_non_rel += non_relevance_index[term]**2
-    mag_non_rel = sqrt(mag_non_rel)
-    
+        mag_non_rel += float(non_relevance_index[term]**2)
+    mag_non_rel = float(sqrt(mag_non_rel))
+
+    print "non-relevant magnitude" + str(mag_non_rel)
     ###calculating the new query
     for term in inverted_index:
         updated_query[term] = query_vector[term] + (0.5/mag_rel) * relevance_index[term] - (0.15/mag_non_rel) * non_relevance_index[term]
