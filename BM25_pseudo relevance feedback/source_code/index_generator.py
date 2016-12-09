@@ -135,7 +135,7 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
         if not query_vector.has_key(term):
             query_vector[term] = 0
     print "query vector generated"
-    ###making the relevant document set vector    
+    ###making the relevant document set vector
     for i in range(0,k):
         doc_id,doc_score = sorted_doc_score[i]
         doc= open(INPUT_FOLDER+"\\"+DOC_NAME[doc_id]+".txt").read()
@@ -144,7 +144,7 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
                 relevance_index[term] += 1
             else:
                 relevance_index[term] = 1
-                
+
     for term in inverted_index:
         if relevance_index.has_key(term):
             relevance_index[term] = relevance_index[term]
@@ -156,7 +156,7 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
         mag_rel = float(sqrt(mag_rel))
     print "relevant vector generated"
     print "relevant magnitude" + str(mag_rel)
-    ###making the non-relevant document set vector    
+    ###making the non-relevant document set vector
     for i in range(k+1,len(sorted_doc_score)):
         doc_id,doc_score = sorted_doc_score[i]
         doc= open(INPUT_FOLDER+"\\"+DOC_NAME[doc_id]+".txt").read()
@@ -165,14 +165,14 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
                 non_relevance_index[term] += 1
             else:
                 non_relevance_index[term] = 1
-                    
+
     for term in inverted_index:
         if non_relevance_index.has_key(term):
             non_relevance_index[term] = non_relevance_index[term]
         else:
             non_relevance_index[term] = 0
     print "non relevant vector generated"
-    
+
     ### calculating the magnitude of the relevant document set vector
     for term in non_relevance_index:
         mag_non_rel += float(non_relevance_index[term]**2)
@@ -182,10 +182,10 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
     ###calculating the new query
     for term in inverted_index:
         updated_query[term] = query_vector[term] + (0.5/mag_rel) * relevance_index[term] - (0.15/mag_non_rel) * non_relevance_index[term]
-    
+
     sorted_updated_query = sorted(updated_query.items(), key=operator.itemgetter(1), reverse=True)
     print "Rocchio algorithm scores generated"
-    
+
     for i in range(20):
         term,frequency = sorted_updated_query[i]
         if term not in query:
@@ -197,12 +197,12 @@ def pseudo_relevance_feedback(sorted_doc_score,query,inverted_index,total_num_of
 def write_doc_score(sorted_doc_score):
     try:
         if(len(sorted_doc_score)>0):
-            out_file  = open(OUTPUT_FOLDER_PATH+"\\BM25_doc_score.txt",'a')
+            out_file  = open(OUTPUT_FOLDER_PATH+"\\BM25_rel_feed_doc_score.txt",'a')
             for i in range(min(100,len(sorted_doc_score))):
                 doc_id,doc_score = sorted_doc_score[i]
-                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +" " + str(i+1) + " " + str(doc_score) +" BM25_Model\n")            
+                out_file.write(str(QUERY_ID) + " Q0 "+ DOC_NAME[doc_id] +" " + str(i+1) + " " + str(doc_score) +" BM25_Model\n")
             out_file.close()
-            print "\nDocument Scoring for Query id = " +str(QUERY_ID) +" has been generated inside BM25_doc_score.txt"
+            print "\nDocument Scoring for Query id = " +str(QUERY_ID) +" has been generated inside BM25_rel_feed_doc_score.txt"
         else:
             print "\nTerm not found in the corpus"
     except Exception as e:
@@ -245,8 +245,8 @@ def start():
         print "\n\t      Query Processing begins\n"
         print "========================================================"
         #Removing the existing VSM_doc_score.txt to prevent appending the new results with the old one.
-        if exists(OUTPUT_FOLDER_PATH+"\\BM25_doc_score.txt"):
-            os.remove(OUTPUT_FOLDER_PATH+"\\BM25_doc_score.txt")
+        if exists(OUTPUT_FOLDER_PATH+"\\BM25_rel_feed_doc_score.txt"):
+            os.remove(OUTPUT_FOLDER_PATH+"\\BM25_rel_feed_doc_score.txt")
         query_file = open("query.txt", 'r')
         for query in query_file.readlines():
             feedback_flag = 1
