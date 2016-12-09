@@ -51,11 +51,14 @@ def generate_doc_bm25_score(query,inverted_index,total_num_of_docs,relevant_list
         query_term_freq = {}
         query_term_list = query.split()
         reduced_inverted_index = {} # this inverted_index contains only those terms which are present in query
+        with open('common_words') as f:
+            stopwords = f.read().splitlines()
         for term in query_term_list:
-            if not query_term_freq.has_key(term):
-                query_term_freq.update({term:1})
-            else:
-                query_term_freq[term]+=1
+            if term not in stopwords:
+                if not query_term_freq.has_key(term):
+                    query_term_freq.update({term:1})
+                else:
+                    query_term_freq[term]+=1
         #reducing the inverted_index with only required terms in query
         for term in query_term_freq:
             if inverted_index.has_key(term):

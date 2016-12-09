@@ -136,7 +136,7 @@ def evaluate_precision_and_recall():
             if not RELEVANT_DICT.get(str(query)):
                 precision_dict[query] = []
                 recall_dict[query] = []
-                outfile.write("The query number "+str(query) +" has no relevant set, hence its precision and recall is 0\n\n ")                
+                outfile.write("The query number "+str(query) +" has no relevant set, hence its precision and recall is 0\n\n")
                 continue
 
 
@@ -172,7 +172,10 @@ def evaluate_precision_and_recall():
                     #print "The recall for " + str(docID) + " is: " + str(recall)
                     recall_dict[query].append({docID : recall})
                     outfile.write(str(query) +" Q0 "+docID+" "+str(doc_rank)+" "+str(doc_score)+" N "+str(precision)+" "+str(recall)+"\n")
-            average_precision = average_precision + float(precision_sum) / float(doc_found)
+            if doc_found != 0:
+                average_precision = average_precision + float(precision_sum) / float(doc_found)
+            else:
+                average_precision = 0
             outfile.write("\nAverage Precision for query no "+ str(query) +" is: " + str(average_precision)+"\n\n")
             sum_average_precision = sum_average_precision + average_precision
             #print "The average precision for " + str(query) + " is: " + str(average_precision)
